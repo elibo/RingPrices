@@ -1,0 +1,11 @@
+D:\Visual projects\Prezas\Prezas\bin\Debug\Prezas.exe.config
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.csprojResolveAssemblyReference.cache
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.Form1.resources
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.Properties.Resources.resources
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.csproj.GenerateResource.Cache
+D:\Visual projects\Prezas\Prezas\bin\Debug\Prezas.exe
+D:\Visual projects\Prezas\Prezas\bin\Debug\Prezas.pdb
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.exe
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.pdb
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.Form2.resources
+D:\Visual projects\Prezas\Prezas\obj\Debug\Prezas.Form3.resources
