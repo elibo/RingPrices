@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,11 @@ namespace Prezas
         public Form2()
         {
             InitializeComponent();
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile("ALGERIA.ttf");
+            label1.Font = new Font(pfc.Families[0], 32, FontStyle.Regular);
             logo_pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            label1.Font = new Font("Algeria", 25, FontStyle.Regular);
+            
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

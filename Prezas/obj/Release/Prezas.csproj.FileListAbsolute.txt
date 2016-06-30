@@ -1,0 +1,15 @@
+C:\Users\eli\Desktop\Prezas\Prezas\bin\Release\Prezas.exe.config
+C:\Users\eli\Desktop\Prezas\Prezas\bin\Release\Prezas.exe.manifest
+C:\Users\eli\Desktop\Prezas\Prezas\bin\Release\Prezas.application
+C:\Users\eli\Desktop\Prezas\Prezas\bin\Release\Prezas.exe
+C:\Users\eli\Desktop\Prezas\Prezas\bin\Release\Prezas.pdb
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.Form1.resources
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.Form2.resources
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.Form3.resources
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.Properties.Resources.resources
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.csproj.GenerateResource.Cache
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.exe.manifest
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.application
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.exe
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.pdb
+C:\Users\eli\Desktop\Prezas\Prezas\obj\Release\Prezas.csprojResolveAssemblyReference.cache

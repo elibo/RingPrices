@@ -24,9 +24,10 @@ namespace Prezas
         private List<string> heihgts;
         Boolean rp;
         double pdiamond = 0;
-
+        
         string observations = "";
         string reference = "";
+        string engarze = "";
 
         internal static Ring Ring
         {
@@ -45,19 +46,17 @@ namespace Prezas
         {
             InitializeComponent();
             label11.Visible = false;
+            pslbl.Visible = false;
             xml.Load("catalogo.xml");
             heihgts = new List<string>();
             heihgts.Add("1,0");
             heihgts.Add("1,3");
-            heihgts.Add("1,5");
+            heihgts.Add("1,5");      
+            groupBox4.Visible = false;
         }
 
 
-        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form3 gold = new Form3();
-            gold.Show();
-        }
+
 
         private void contactarConNosotrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -71,7 +70,7 @@ namespace Prezas
             clearAll();
             loadBoxes();
             ring_pb.Image = Image.FromFile(@"Images\" + reference + ".jpg");
-            ring_pb.SizeMode = PictureBoxSizeMode.StretchImage;
+            ring_pb.SizeMode = PictureBoxSizeMode.CenterImage;
             rp = true;
         }
 
@@ -89,20 +88,24 @@ namespace Prezas
             diamond_cb.Items.Clear();
             square_rb.Checked = false;
             round_rb.Checked = false;
-            obs_rtb.Clear(); 
+            kil3_rb.Checked = false;
+            kil7_rb.Checked = false;
+            obs_rtb.Clear();
+            groupBox4.Visible = false;
             if (rp) {
                 ring_pb.Image = null;
                 detail_pb.Image = null;
                 diamond_pb.Image = null;
                 texture_cb.ResetText();
-                ref_tb.Clear();
                 colors_cb.ResetText();
                 heights_cb.ResetText();
                 weighs_cb.ResetText();
                 nums_cb.ResetText();
                 diamond_cb.ResetText();
                 label11.Visible = false;
-                label12.ResetText();   
+                price_lb.ResetText();
+                pesolbl.ResetText();
+                pslbl.ResetText();  
                 rp = false;
             }
             
@@ -111,12 +114,56 @@ namespace Prezas
         private void clean_bt_Click(object sender, EventArgs e)
         {
             clearAll();
+            res2_rtb.ResetText();
+            res_rtb.ResetText();
             
         }
 
         private void price_bt_Click(object sender, EventArgs e)
         {
-            getPrice();
+
+            if (ring.Pmf == 0)
+            {
+                MessageBox.Show("Error. Debe introducir un precio para el oro antes de calcular el precio de la alianza.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (kil3_rb.Checked == false && kil7_rb.Checked == false)
+            {
+                MessageBox.Show("Error. Debe escoger un tipo de alianza para poder calcular el precio.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (!diamond_cb.SelectedItem.ToString().Equals("Sin diamante")) {
+                if (square_rb.Checked == false && round_rb.Checked == false)
+                {
+                    MessageBox.Show("Error. Debe escoger un tipo de engaste para poder calcular el precio de la alianza.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                getPrice();
+            }
+            else {
+                getPrice();
+            }
+        }
+
+        public string getSummary() {
+            string goldcolor = colors_cb.SelectedItem.ToString();
+            string rweight = weighs_cb.SelectedItem.ToString();
+            string rtexture = texture_cb.SelectedItem.ToString();
+            string rheight = heights_cb.SelectedItem.ToString();
+            string tatum = nums_cb.SelectedItem.ToString();
+            string rdiamond = diamond_cb.SelectedItem.ToString();
+            string kilats = Ring.Kilates.ToString();
+            string engarce = "";
+            if (!rdiamond.Equals("Sin diamante")) {
+                engarce = engarze;
+            }
+            string summary = "Referencia de alianza: "+reference+Environment.NewLine+
+                "Ley de oro: "+ kilats+Environment.NewLine+
+                "Color de la alianza: " + goldcolor+Environment.NewLine+
+                "Ancho de la alianza: "+ rweight +Environment.NewLine+
+                "Tipo de textura: "+ rtexture +Environment.NewLine+
+                "Altura alianza: " + rheight +Environment.NewLine+
+                "Número de palo tatum: " + tatum + Environment.NewLine+
+                "Tipo de diamante: " + rdiamond +  " " + engarce;
+
+            return summary;
         }
 
         public void getPrice() {
@@ -136,18 +183,32 @@ namespace Prezas
             {
                 weight = float.Parse(w.InnerText);
             }
+         
             Ring.Color = color;
             roundWeight(weight, numberl, heightl);
-            label11.Visible = true;
             getDiamond();
             Ring.Diamond = pdiamond;
-            label12.Text = Ring.getFinalPrice().ToString() + " €";
+            pslbl.Visible = true;
+            pesolbl.Text = ring.Weight.ToString()+ " grs.";
+            label11.Visible = true; 
+            price_lb.Text = Ring.getFinalPrice().ToString() + " €";
         }
 
         public void roundWeight(double weight, int number, float height)
         {
             double weightnr = (weight / 58 * (number + 40)) * height;
             double finalWeight = Math.Round((weightnr * 2) / 2, 2);
+            if (kil3_rb.Checked)
+            {
+                ring.Kilates = 375;
+                finalWeight = finalWeight * 0.80;
+                finalWeight = Math.Round(finalWeight, 2);
+            }
+            else if (kil7_rb.Checked)
+            {
+                ring.Kilates = 750;
+                finalWeight = Math.Round(finalWeight, 2);
+            }
             Ring.Weight = float.Parse(finalWeight.ToString());
             Ring.Height = height;
             Ring.Number = number;
@@ -200,7 +261,9 @@ namespace Prezas
         private void texture_cb_SelectedIndexChanged(object sender, EventArgs e)
         {
             string texture = texture_cb.SelectedItem.ToString();
+            if (!texture.Equals("Sin Textura"))
             detail_pb.Image = Image.FromFile(@"Images\" + texture + ".jpg");
+            detail_pb.SizeMode = PictureBoxSizeMode.CenterImage;
         }
 
         private void heights_cb_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,22 +272,22 @@ namespace Prezas
             diamond_cb.Items.Clear();
             if (sh.Equals("1,0")) {
                 diamond_cb.Items.Add("Sin diamante");
-                diamond_cb.Items.Add("1,3mm");
-                diamond_cb.Items.Add("1,5mm");
+                diamond_cb.Items.Add("1,3mm - Diamante de un punto");
+                diamond_cb.Items.Add("1,5mm - Diamante de un punto y medio");
             } else if (sh.Equals("1,3")) {
                 diamond_cb.Items.Add("Sin diamante");
-                diamond_cb.Items.Add("1,3mm");
-                diamond_cb.Items.Add("1,5mm");
-                diamond_cb.Items.Add("1,7mm");
-                diamond_cb.Items.Add("1,8mm");
+                diamond_cb.Items.Add("1,3mm - Diamante de un punto");
+                diamond_cb.Items.Add("1,5mm - Diamante de un punto y medio");
+                diamond_cb.Items.Add("1,7mm - Diamante de dos puntos");
+                diamond_cb.Items.Add("1,8mm - Diamante de dos puntos y medio");
             } else if (sh.Equals("1,5")) {
                 diamond_cb.Items.Add("Sin diamante");
-                diamond_cb.Items.Add("1,3mm");
-                diamond_cb.Items.Add("1,5mm");
-                diamond_cb.Items.Add("1,7mm");
-                diamond_cb.Items.Add("1,8mm");
-                diamond_cb.Items.Add("2,0mm");
-                diamond_cb.Items.Add("2,2mm");
+                diamond_cb.Items.Add("1,3mm - Diamante de un punto");
+                diamond_cb.Items.Add("1,5mm - Diamante de un punto y medio");
+                diamond_cb.Items.Add("1,7mm - Diamante de dos puntos");
+                diamond_cb.Items.Add("1,8mm - Diamante de dos puntos y medio");
+                diamond_cb.Items.Add("2,0mm - Diamante de tres puntos");
+                diamond_cb.Items.Add("2,2mm - Diamante de cuatro puntos");
             }
         }
 
@@ -235,21 +298,22 @@ namespace Prezas
                 case "Sin diamante":
                     pdiamond = 0;
                     break;
-                case "1,3mm": pdiamond = 16;
+                case "1,3mm - Diamante de un punto":
+                    pdiamond = 16;
                         break;
-                case "1,5mm":
+                case "1,5mm - Diamante de un punto y medio":
                     pdiamond = 20;
                     break;
-                case "1,7mm":
+                case "1,7mm - Diamante de dos puntos":
                     pdiamond = 25;
                     break;
-                case "1,8mm":
+                case "1,8mm - Diamante de dos puntos y medio":
                     pdiamond = 29;
                     break;
-                case "2,0mm":
+                case "2,0mm - Diamante de tres puntos":
                     pdiamond = 32;
                     break;
-                case "2,2mm":
+                case "2,2mm - Diamante de cuatro puntos":
                     pdiamond = 43;
                     break;
                 default:
@@ -260,6 +324,7 @@ namespace Prezas
         private void round_rb_CheckedChanged(object sender, EventArgs e)
         {
             if (round_rb.Checked) {
+                engarze = "redondo";
                 diamond_pb.Image = Image.FromFile(@"Images\rounded.jpg");
                 diamond_pb.SizeMode = PictureBoxSizeMode.StretchImage;
             }
@@ -269,6 +334,7 @@ namespace Prezas
         {
             if (square_rb.Checked)
             {
+                engarze = "cuadrado";
                 diamond_pb.Image = Image.FromFile(@"Images\squared.jpg");
                 diamond_pb.SizeMode = PictureBoxSizeMode.StretchImage;
             }
@@ -277,6 +343,43 @@ namespace Prezas
         private void salirToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void diamond_cb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sd = diamond_cb.SelectedItem.ToString();
+            if (sd.Equals("Sin diamante")) {
+                square_rb.Checked = false;
+                round_rb.Checked = false;
+                groupBox4.Visible = false;
+                diamond_pb.Image = null;
+            } else
+                groupBox4.Visible = true;
+
+
+        }
+
+        private void ref_tb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                search_bt.PerformClick();
+        }
+
+        private void saver1_bt_Click(object sender, EventArgs e)
+        {
+            res_rtb.Text=getSummary();
+        }
+
+        private void saver2_bt_Click(object sender, EventArgs e)
+        {
+            res2_rtb.Text=getSummary();
+        }
+
+        private void makeOrder_bt_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.akrosjoyeros.com/contacto_es/");
+            Clipboard.SetText("Alianza 1: " + Environment.NewLine
+                +res_rtb.Text + Environment.NewLine + Environment.NewLine + "Alianza 2: " + Environment.NewLine  + res2_rtb.Text);
         }
     }
 }

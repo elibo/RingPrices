@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace Prezas
         private float height;
         private float finalPrice;
         private double diamond;
+        private int kilates;
+        
+
 
         public double Pmf
         {
@@ -122,13 +126,37 @@ namespace Prezas
             }
         }
 
-        public float getFinalPrice() {
-            double price = (Pmf * 0.75 * 1.05 + color) * 1.25 * Weight;
-            double roundprice=Math.Round(price , 1);
-            roundprice = roundprice + Diamond;
-            finalPrice = float.Parse(roundprice.ToString());
+        public int Kilates
+        {
+            get
+            {
+                return kilates;
+            }
 
+            set
+            {
+                kilates = value;
+            }
+        }
+
+  
+
+        public float getFinalPrice() {
+            if (kilates==375) {
+                double price9 = ((((pmf * 0.375) * 1.10) + (Color + 1.5)) * 1.28) * Weight;
+                double roundprice9 = Math.Round(price9, 2);
+                roundprice9 = roundprice9 + Diamond;
+                finalPrice = float.Parse(roundprice9.ToString());
+            } else if (kilates==750) {
+                double price = (Pmf * 0.75 * 1.05 + Color) * 1.25 * Weight;
+                double roundprice = Math.Round(price, 2);
+                roundprice = roundprice + Diamond;
+                finalPrice = float.Parse(roundprice.ToString());
+            }
             return finalPrice;
         }
+
+
+   
     }
 }
