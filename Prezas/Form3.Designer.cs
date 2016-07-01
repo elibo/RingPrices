@@ -52,6 +52,7 @@
             this.pmf_tb.Name = "pmf_tb";
             this.pmf_tb.Size = new System.Drawing.Size(100, 22);
             this.pmf_tb.TabIndex = 1;
+            this.pmf_tb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pmf_tb_KeyDown);
             // 
             // button1
             // 

@@ -10,15 +10,15 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{1213F9F4-AEC2-4EF8-9AD6-5F12376A3643}
+AppId={{F7ED0441-964B-476E-A278-46074794D84E}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-OutputBaseFilename=AlianzasAkos_setup
-SetupIconFile=D:\Descargas\066_ISw_icon.ico
+OutputBaseFilename=Akros_setup
+SetupIconFile=D:\Descargas\066_QV0_icon.ico
 Compression=lzma
 SolidCompression=yes
 

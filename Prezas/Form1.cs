@@ -23,6 +23,7 @@ namespace Prezas
         private List<string> numbers;
         private List<string> heihgts;
         Boolean rp;
+        bool mo = false;
         double pdiamond = 0;
         
         string observations = "";
@@ -45,6 +46,7 @@ namespace Prezas
         public Form1()
         {
             InitializeComponent();
+            makeOrder_bt.Enabled = mo;
             label11.Visible = false;
             pslbl.Visible = false;
             xml.Load("catalogo.xml");
@@ -56,8 +58,6 @@ namespace Prezas
         }
 
 
-
-
         private void contactarConNosotrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 contact = new Form2();
@@ -67,11 +67,18 @@ namespace Prezas
         private void search_bt_Click(object sender, EventArgs e)
         {
             reference = ref_tb.Text;
-            clearAll();
-            loadBoxes();
-            ring_pb.Image = Image.FromFile(@"Images\" + reference + ".jpg");
-            ring_pb.SizeMode = PictureBoxSizeMode.CenterImage;
-            rp = true;
+            if (reference.Equals(""))
+            {
+                MessageBox.Show("Debes introducir todos los campos marcados con *","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+            else {
+                clearAll();
+                loadBoxes();
+                ring_pb.Image = Image.FromFile(@"Images\" + reference + ".jpg");
+                ring_pb.SizeMode = PictureBoxSizeMode.CenterImage;
+                rp = true;
+            }
+        
         }
 
         public void clearAll()
@@ -122,46 +129,38 @@ namespace Prezas
         private void price_bt_Click(object sender, EventArgs e)
         {
 
-            if (ring.Pmf == 0)
+            if (kil3_rb.Checked == false && kil7_rb.Checked == false)
             {
-                MessageBox.Show("Error. Debe introducir un precio para el oro antes de calcular el precio de la alianza.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debes introducir todos los campos marcados con *", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if (kil3_rb.Checked == false && kil7_rb.Checked == false)
-            {
-                MessageBox.Show("Error. Debe escoger un tipo de alianza para poder calcular el precio.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else if (colors_cb.SelectedItem==null || weighs_cb.SelectedItem == null|| texture_cb.SelectedItem == null|| heights_cb.SelectedItem == null||
+                nums_cb.SelectedItem == null|| diamond_cb.SelectedItem == null) {
+                MessageBox.Show("Debes introducir todos los campos marcados con *", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if (!diamond_cb.SelectedItem.ToString().Equals("Sin diamante")) {
-                if (square_rb.Checked == false && round_rb.Checked == false)
+            else if (!diamond_cb.SelectedItem.ToString().Equals("Sin diamante") && square_rb.Checked == false && round_rb.Checked == false)
                 {
-                    MessageBox.Show("Error. Debe escoger un tipo de engaste para poder calcular el precio de la alianza.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Debes introducir todos los campos marcados con *", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                getPrice();
-            }
             else {
                 getPrice();
             }
         }
 
-        public string getSummary() {
-            string goldcolor = colors_cb.SelectedItem.ToString();
-            string rweight = weighs_cb.SelectedItem.ToString();
-            string rtexture = texture_cb.SelectedItem.ToString();
-            string rheight = heights_cb.SelectedItem.ToString();
-            string tatum = nums_cb.SelectedItem.ToString();
-            string rdiamond = diamond_cb.SelectedItem.ToString();
-            string kilats = Ring.Kilates.ToString();
+        public string getSummary() { 
             string engarce = "";
-            if (!rdiamond.Equals("Sin diamante")) {
+            if (!diamond_cb.SelectedItem.ToString().Equals("Sin diamante")) {
                 engarce = engarze;
             }
-            string summary = "Referencia de alianza: "+reference+Environment.NewLine+
-                "Ley de oro: "+ kilats+Environment.NewLine+
-                "Color de la alianza: " + goldcolor+Environment.NewLine+
-                "Ancho de la alianza: "+ rweight +Environment.NewLine+
-                "Tipo de textura: "+ rtexture +Environment.NewLine+
-                "Altura alianza: " + rheight +Environment.NewLine+
-                "Número de palo tatum: " + tatum + Environment.NewLine+
-                "Tipo de diamante: " + rdiamond +  " " + engarce;
+            string summary = "Referencia de alianza: " + reference + Environment.NewLine +
+                "Ley de oro: " + Ring.Kilates.ToString() + Environment.NewLine +
+                "Color de la alianza: " + colors_cb.SelectedItem.ToString() + Environment.NewLine +
+                "Ancho de la alianza: " + weighs_cb.SelectedItem.ToString() + Environment.NewLine +
+                "Tipo de textura: " + texture_cb.SelectedItem.ToString() + Environment.NewLine +
+                "Altura alianza: " + heights_cb.SelectedItem.ToString() + Environment.NewLine +
+                "Número de palo tatum: " + nums_cb.SelectedItem.ToString() + Environment.NewLine +
+                "Tipo de diamante: " + diamond_cb.SelectedItem.ToString() + " " + engarce + Environment.NewLine +
+                "Precio aproximado: " + Ring.FinalPrice.ToString() + " euros" + Environment.NewLine +
+                "Peso aproximado: " + Ring.Weight.ToString() + " gramos";
 
             return summary;
         }
@@ -368,11 +367,15 @@ namespace Prezas
         private void saver1_bt_Click(object sender, EventArgs e)
         {
             res_rtb.Text=getSummary();
+            mo = true;
+            makeOrder_bt.Enabled = mo;
         }
 
         private void saver2_bt_Click(object sender, EventArgs e)
         {
             res2_rtb.Text=getSummary();
+            mo = true;
+            makeOrder_bt.Enabled = mo;
         }
 
         private void makeOrder_bt_Click(object sender, EventArgs e)

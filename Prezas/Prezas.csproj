@@ -62,7 +62,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>066_ISw_icon.ico</ApplicationIcon>
+    <ApplicationIcon>066_QV0_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="066_ISw_icon.ico" />
+    <Content Include="066_QV0_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
